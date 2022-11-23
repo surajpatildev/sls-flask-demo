@@ -12,7 +12,7 @@ custom:
 
 provider:
   name: aws
-  runtime: python3.9.1
+  runtime: python3.9
   lambdaHashingVersion: '20201221'
   region: us-east-1
 
