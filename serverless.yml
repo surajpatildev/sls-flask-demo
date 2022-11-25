@@ -8,7 +8,6 @@ custom:
     packRequirements: false
   pythonRequirements:
     dockerizePip: true
-    dockerImage: public.ecr.aws/sam/build-python3.9:latest
 
 provider:
   name: aws
@@ -23,12 +22,12 @@ functions:
       - http:
           path: /
           method: GET
-          authorizer:
-            name: waypointc
-            scopes:
-              - waypoint/*
-            type: COGNITO_USER_POOLS
-            arn: arn:aws:cognito-idp:ap-south-1:026720776677:userpool/ap-south-1_wD3fO1mkQ
+#          authorizer:
+#            name: waypointc
+#            scopes:
+#              - waypoint/*
+#            type: COGNITO_USER_POOLS
+#            arn: arn:aws:cognito-idp:ap-south-1:026720776677:userpool/ap-south-1_wD3fO1mkQ
 
 
 plugins:
