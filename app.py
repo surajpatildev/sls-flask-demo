@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def hello_from_root():
-    event = request.environ.get('serverless.event')
+    event = request.environ.get('serverless.event', {})
     print("event", event)
     claims = event.get("authorizer", {}).get("claims", {})
 

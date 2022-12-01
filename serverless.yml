@@ -1,4 +1,4 @@
-service: waypoint-demo
+service: demof
 
 frameworkVersion: '3'
 
@@ -11,7 +11,7 @@ custom:
 
 provider:
   name: aws
-  runtime: python3.9
+  runtime: python3.7
   lambdaHashingVersion: '20201221'
   region: us-east-1
 
