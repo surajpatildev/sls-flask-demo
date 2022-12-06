@@ -23,8 +23,6 @@ def set_logged_in_service_context():  # pylint:disable=inconsistent-return-state
         request_context = event.get("requestContext", {})
 
         claims = request_context.get("authorizer", {}).get("claims", {})
-        print('context', context)
-        print('context dict', context.__dict__)
 
         client_id = claims.get("client_id")
         scope = claims.get("scope")
