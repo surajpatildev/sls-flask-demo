@@ -4,13 +4,14 @@ import os
 from flask import Flask, jsonify, make_response, request
 
 app = Flask(__name__)
+app.config['APP_NAME'] = 'waypoint'
 
 LOGGER = logging.getLogger(__name__)
 
 
 @app.before_request
 def set_logged_in_service_context():  # pylint:disable=inconsistent-return-statements
-    is_offline = os.environ["IS_OFFLINE"]
+    is_offline = os.environ.get('IS_OFFLINE', False)
     if is_offline:
         # If offline, set local user context
         request.service = "local"
@@ -19,8 +20,12 @@ def set_logged_in_service_context():  # pylint:disable=inconsistent-return-state
         # if via API gateway, use cognito to define scopes and service definitions
         context = request.environ.get("serverless.context")
         event = request.environ.get("serverless.event", {})
+        request_context = event.get("requestContext", {})
 
-        claims = event.get("authorizer", {}).get("claims", {})
+        claims = request_context.get("authorizer", {}).get("claims", {})
+        print('context', context)
+        print('context dict', context.__dict__)
+
         client_id = claims.get("client_id")
         scope = claims.get("scope")
         if not all([client_id, scope]):
@@ -32,7 +37,7 @@ def set_logged_in_service_context():  # pylint:disable=inconsistent-return-state
 
         # strip scopes to pick schema names
         app_name = app.config["APP_NAME"]
-        scopes = scope.replace(f"{app_name}/").split(" ")
+        scopes = scope.replace(f"{app_name}/", "").split(" ")
         request.service = client_id
         request.scopes = scopes
 
